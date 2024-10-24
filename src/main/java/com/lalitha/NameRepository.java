@@ -2,44 +2,8 @@ package com.lalitha;
 
 import java.util.Arrays;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class NameRepository {
     private static String[] names = {};
-
-    public static void main(String[] args) {
-        System.out.println("====================================================");
-        System.out.println("Size of array initially: "+getSize());
-
-        String[] contacts = {"Lalitha Ogireddy","Sayana Surendran","Valerii Borisenko","Imad kassar"};
-        setNames(contacts);
-        System.out.println("----------------------------------------------------");
-        System.out.println("Size of array after setNames: "+getSize());
-        System.out.println("The array is : "+Arrays.toString(findAll()));
-        System.out.println("----------------------------------------------------");
-
-        System.out.println("Clearing the array..");
-        clear();
-        System.out.println("Size of array after clearing :"+getSize());
-
-        contacts = Arrays.copyOf(contacts,2);
-        contacts[0] = "Mehrdad Javan";
-        contacts[1] = "Marcus Gudmundsen";
-        setNames(contacts);
-        System.out.println("----------------------------------------------------");
-        System.out.println("Size of array after setNames: "+getSize());
-        System.out.println("The array is : "+Arrays.toString(findAll()));
-        System.out.println("----------------------------------------------------");
-
-        System.out.println("Finding Mehrdad Javan is present in array : "+find("Mehrdad Javan"));
-        System.out.println("Finding Alex Nolan is present in array : "+find("Alex Nolan"));
-
-        System.out.println("----------------------------------------------------");
-        System.out.println("Is new name (\"Alex Nolan\") added :"+add("Alex Nolan"));
-        System.out.println("----------------------------------------------------");
-        System.out.println("Final  array is : "+Arrays.toString(findAll()));
-
-    }
 
     public static int getSize(){
         return names.length;
@@ -75,6 +39,78 @@ public class NameRepository {
             return true;
         }
         return false;
+    }
+
+    public static String[] findByFirstName(final String firstName){
+        int j=0;
+        for(String name : names){
+            if(name.startsWith(firstName)){
+                j++;
+            }
+        }
+        String[] resultArr = new String[j];
+        j=0;
+        for(String name : names){
+            if(name.contains(firstName)){
+                resultArr[j] = name;
+                j++;
+            }
+        }
+        return resultArr;
+    }
+
+    public static String[] findByLastName(final String lastName){
+        int j=0;
+        for(String name : names){
+            if(name.endsWith(lastName)){
+                j++;
+            }
+        }
+        String[] resultArr = new String[j];
+        j=0;
+        for(String name : names){
+            if(name.contains(lastName)){
+                resultArr[j] = name;
+                j++;
+            }
+        }
+        return resultArr;
+    }
+
+    public static boolean update(final String original, final String updatedName){
+        boolean isUpdated=false;
+        for(String name : names){
+            if(name.equals(updatedName)){
+                isUpdated=false;
+                return isUpdated;
+            }
+        }
+        for(int i=0;i<names.length;i++){
+            if(names[i].equals(original)){
+                names[i] = updatedName;
+                isUpdated=true;
+            }
+        }
+        return isUpdated;
+    }
+
+    public static boolean remove(final String fullName){
+        String[] newArray;
+        String foundString = find(fullName);
+        if(foundString==null){
+            return false;
+        } else {
+            newArray = new String[names.length-1];
+            int j=0;
+            for(int i=0;i<names.length;i++){
+                if(!(names[i].equals(fullName))){
+                    newArray[j] = names[i];
+                    j++;
+                }
+            }
+        }
+        names=newArray;
+        return true;
     }
 
 }
