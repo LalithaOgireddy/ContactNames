@@ -42,39 +42,31 @@ public class NameRepository {
     }
 
     public static String[] findByFirstName(final String firstName){
-        int j=0;
+        String[] resultArr = new String[0];
         for(String name : names){
-            if(name.startsWith(firstName)){
-                j++;
-            }
-        }
-        String[] resultArr = new String[j];
-        j=0;
-        for(String name : names){
-            if(name.contains(firstName)){
-                resultArr[j] = name;
-                j++;
+            String[] split = name.split(" ");
+            if(split[0].equals(firstName)){
+                resultArr=extendArray(name,resultArr);
             }
         }
         return resultArr;
     }
 
     public static String[] findByLastName(final String lastName){
-        int j=0;
+        String[] resultArr = new String[0];
         for(String name : names){
-            if(name.endsWith(lastName)){
-                j++;
-            }
-        }
-        String[] resultArr = new String[j];
-        j=0;
-        for(String name : names){
-            if(name.contains(lastName)){
-                resultArr[j] = name;
-                j++;
+            String[] split = name.split(" ");
+            if(split[1].equals(lastName)){
+                resultArr=extendArray(name,resultArr);
             }
         }
         return resultArr;
+    }
+
+    public static String[] extendArray(String element,String[] arr){
+        String[] newArr = Arrays.copyOf(arr,arr.length+1);
+        newArr[arr.length] = element;
+        return newArr;
     }
 
     public static boolean update(final String original, final String updatedName){
